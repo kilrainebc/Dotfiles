@@ -28,8 +28,8 @@ printf "$packages\n"
 printf "$pypack\n"
 
 #Install Packages
-#sudo pacman -Syu --noconfirm $packages
-sudo pacman -Q $packages
+sudo pacman -Syu --noconfirm $packages
+#sudo pacman -Q $packages
 
 #Install PyWal
 yes | sudo pip3 install $pypack 
