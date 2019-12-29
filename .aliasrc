@@ -1,0 +1,9 @@
+alias v="vim"
+alias r="ranger"
+alias ..="cd .."
+alias ...="cd ../.."
+
+alias brc="vim ~/.bashrc"
+alias vrc="vim ~/.vimrc"
+alias i3c="vim ~/.config/i3/config"
+alias ls="ls --color=auto"
