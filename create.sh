@@ -14,7 +14,7 @@ echo ""
 #cp ~/.vimrc ~/.dotfiles
 #cp ~/.xinitrc ~/.dotfiles
 #cp ~/.gitconfig ~/.dotfiles
-
+#cp ~/bg1.png ~/.dotfiles
 
 
 echo ""
@@ -30,6 +30,7 @@ rm ~/.fehbg
 rm ~/.vimrc
 rm ~/.xinitrc
 rm ~/.gitconfig
+rm ~/bg1.png
 
 echo ""
 echo "=== SYMLINKING DOTFILES ==="
@@ -43,3 +44,4 @@ ln -sv ~/.dotfiles/.fehbg ~
 ln -sv ~/.dotfiles/.vimrc ~
 ln -sv ~/.dotfiles/.xinitrc ~
 ln -sv ~/.dotfiles/.gitconfig ~
+ln -sv ~/.dotfiles/bg1.png ~
