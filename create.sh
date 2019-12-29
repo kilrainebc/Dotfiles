@@ -51,3 +51,4 @@ ln -sv ~/dotfiles/.vimrc ~
 ln -sv ~/dotfiles/.xinitrc ~
 ln -sv ~/dotfiles/.gitconfig ~
 ln -sv ~/dotfiles/bg1.png ~
+wal -i ~/bg1.png

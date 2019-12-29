@@ -8,7 +8,7 @@ pypack=''
 packages+=' xorg-server xorg-xinit xf86-video-vmware'
 
 # Terminal & WM | Urxvt, i3-wm, 
-packages+=' rxvt-unicode i3-wm' 
+packages+=' rxvt-unicode i3-wm i3status' 
 
 # Fonts | Dejavu & Overpass
 packages+=' otf-overpass ttf-dejavu'
