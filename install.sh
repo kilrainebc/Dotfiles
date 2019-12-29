@@ -14,7 +14,7 @@ packages+=' rxvt-unicode i3-wm i3status'
 packages+=' otf-overpass ttf-dejavu'
 
 # UI | dmenu, ranger, feh, w3m, imagemagick, pywal
-packages+=' dmenu ranger feh w3m imagemagick' 
+packages+=' dmenu ranger feh w3m imagemagick neofetch' 
 pypack+=' pywal'
 
 # Coding | Vim, python, pip
