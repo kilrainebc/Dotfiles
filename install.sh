@@ -4,8 +4,8 @@
 packages=''
 pypack=''
 
-# X.Org  |  
-packages+=' xorg-apps xorg-server xorg-xinit xf86-video-vesa'
+# X.Org  | #xorg-apps was removed and 
+packages+=' xorg-server xorg-xinit xf86-video-vmware'
 
 # Terminal & WM | Urxvt, i3-wm, 
 packages+=' rxvt-unicode i3-wm' 
@@ -29,6 +29,7 @@ printf "$pypack\n"
 
 #Install Packages
 #sudo pacman -Syu --noconfirm $packages
+sudo pacman -Q $packages
 
 #Install PyWal
-#yes | pip3 install $pypack 
+yes | sudo pip3 install $pypack 
