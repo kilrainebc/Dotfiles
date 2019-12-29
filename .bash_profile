@@ -11,3 +11,4 @@ if [ -f ~/.bashrc ]; then
 fi
 
 neofetch
+startx
