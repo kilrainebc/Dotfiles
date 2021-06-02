@@ -1,4 +1,4 @@
-alias v="vim"
+alias vi="vim"
 alias r="ranger"
 alias ..="cd .."
 alias ...="cd ../.."

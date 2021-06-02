@@ -11,5 +11,5 @@ PS1='[\u@\h \W]\$ '
 ###YASH SETUP###
 
 source ~/.aliasrc
-
+neofetch
 
