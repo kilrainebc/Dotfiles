@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Reset pacman keys
+sudo rm /etc/pacman.d/gnupg -r
+pacman-key --init
+pacman-key --populate archlinux
+
 # Initialize packages var
 packages=''
 pypack=''

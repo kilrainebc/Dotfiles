@@ -30,7 +30,7 @@ rm ~/.Xresources
 rm ~/.bash_profile
 rm ~/.aliasrc
 rm ~/.bashrc
-#rm -rf ~/.config/
+rm -rf ~/.config/
 rm ~/.fehbg
 rm ~/.vimrc
 rm ~/.xinitrc
@@ -40,15 +40,18 @@ rm ~/bg1.png
 echo ""
 echo "=== SYMLINKING DOTFILES ==="
 echo ""
-ln -sv ~/dotfiles/.Xresources ~
-ln -sv ~/dotfiles/.bash_profile ~
-ln -sv ~/dotfiles/.aliasrc ~
-ln -sv ~/dotfiles/.bashrc ~
+cwd=$(pwd) 
+ln -sv $cwd/.Xresources ~
+ln -sv $cwd/.bash_profile ~
+ln -sv $cwd/.aliasrc ~
+ln -sv $cwd/.bashrc ~
 #ln -sv ~/.dotfiles/.config/ ~ #doesn't work
-cp -rv ~/dotfiles/.config ~
-ln -sv ~/dotfiles/.fehbg ~
-ln -sv ~/dotfiles/.vimrc ~
-ln -sv ~/dotfiles/.xinitrc ~
-ln -sv ~/dotfiles/.gitconfig ~
-ln -sv ~/dotfiles/bg1.png ~
+cp -rv $cwd/.config ~/.config ~
+ln -sv $cwd/.fehbg ~
+ln -sv $cwd/.vimrc ~
+ln -sv $cwd/.xinitrc ~
+ln -sv $cwd/.gitconfig ~
+cp ./bg1.png ~/bg1.png
+#ln -sv ./dotfiles/bg1.png ~
 wal -i ~/bg1.png
+startx
