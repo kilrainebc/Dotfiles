@@ -26,7 +26,7 @@ function install-packages () {
   packages+=' vim python python-pip'
 
   # Admin-Tools | SSH, Firefox 
-  packages+=' openssh firefox'  
+  packages+=' openssh firefox wget'  
 
   #Install Packages
   sudo pacman -Syu --noconfirm $packages
@@ -41,24 +41,26 @@ function install-shellcheck () {
     local scversion
     scversion="latest" # or "v0.4.7", or "stable", or "latest"
     wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
-    cp "shellcheck-${scversion}/shellcheck" /usr/bin/
+    sudo cp "shellcheck-${scversion}/shellcheck" /usr/bin/
     rm -rf "shellcheck-${scversion}"    
   fi
 }
 
 function install-shfmt () {
-  if [[ ! $(shfmt --version) ]]; then
+  while [[ ! $(shfmt --version) ]]; do 
     while [[ ! $(go version) ]]; do
       wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz
-      tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
-      {
-        printf "export PATH=%s:/usr/local/go/bin" "$PATH"
-        printf "export GOPATH=/usr/local/go"
-      } >> /etc/profile
-      source /etc/profile
+      sudo tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
+      if [[ -z $GOPATH ]]; then
+        {
+	  printf "export PATH=%s:/usr/local/go/bin\n" "$PATH"
+	  printf "export GOPATH=/usr/local/go\n"
+        } | sudo tee -a /etc/profile 
+        source /etc/profile
+      fi 
     done
-    go get mvdan.cc/sh/v3/cmd/shfmt  
-  fi
+    sudo go get mvdan.cc/sh/v3/cmd/shfmt  
+  done 
 }
 
 function clean-dotfiles () {
@@ -94,9 +96,9 @@ function start-gui () {
 }
 
 function main () {
-    install-shellcheck
-    install-shfmt
     install-packages
+    install-shellcheck
+    #install-shfmt #something wrong with this
     clean-dotfiles
     create-symlinks
     start-gui
