@@ -1,15 +1,24 @@
 #
 # ~/.bashrc
 #
+# Author: kilrainebc
+# Description: executed when bash started
+
+# shellcheck disable=SC2148,SC1090
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
-#PS1="\033[36m\]\u\[\033[m\]@\h[\033[33;1m\]\w\[\033[m\]]\n-> "  
-###YASH SETUP###
 
-source ~/.aliasrc
+files="/etc/profile
+  $HOME/.aliasrc"
+
+for file in $files; do
+  if [[ -f "$file" ]]; then
+    source "$file"
+  fi
+done
+
 neofetch
 

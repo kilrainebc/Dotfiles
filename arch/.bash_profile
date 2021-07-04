@@ -1,13 +1,13 @@
 #
 # ~/.bash_profile
 #
+# Author: kilrainebc
+# Description: executed when bash invoked as interactive login shell
 
-# [[ -f ~/.bashrc ]] && . ~/.bashrc
+# shellcheck disable=SC2148,SC1090
 
-# if bashrc exists, source it 
-
-if [ -f ~/.bashrc ]; then
-	source ~/.bashrc
+if [[ -f ~/.bashrc ]]; then
+  source ~/.bashrc
 fi
 
 startx

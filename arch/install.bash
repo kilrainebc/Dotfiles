@@ -9,6 +9,9 @@ function install-packages () {
   sudo pacman-key --init
   sudo pacman-key --populate archlinux
 
+  # Shell
+  packages+=' zsh'
+
   # X.Org  | #xorg-apps was removed and 
   packages+=' xorg-server xorg-xinit xf86-video-vmware'
 
@@ -47,19 +50,24 @@ function install-shellcheck () {
 }
 function install-go () {
     if [[ ! $(go version) ]]; then
-      wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz
-      sudo tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
+      local goversion
+      goversion="go1.16.5.linux-amd64.tar.gz"
+      wget https://golang.org/dl/${goversion}
+      sudo tar -C /usr/local -xzf ${goversion} 
       {
-        printf "export PATH=%s:/usr/local/go/bin\n" "$PATH"
-        printf "export GOPATH=/home/%s/go/bin\n" "$USER"
-        printf "export PATH=%s:%s\n" "$PATH" "$GOPATH"
-      } | sudo tee -a ~/.bashrc
+        printf "export GOPATH=/usr/local/go\n" 
+        printf "export PATH=%s:/usr/local/go/bin\n" "$PATH" 
+      } | sudo tee -a /etc/profile
+      rm -rf "${goversion}"
     fi
 }
 
 function install-shfmt () {
   if [[ ! $(shfmt --version) ]]; then  
-    sudo go get mvdan.cc/sh/v3/cmd/shfmt  
+    if [[ -z $GOPATH ]];then
+      source /etc/profile 
+    fi
+    sudo -E go get mvdan.cc/sh/v3/cmd/shfmt  
   fi 
 }
 
