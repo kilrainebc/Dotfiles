@@ -45,22 +45,22 @@ function install-shellcheck () {
     rm -rf "shellcheck-${scversion}"    
   fi
 }
-
-function install-shfmt () {
-  while [[ ! $(shfmt --version) ]]; do 
-    while [[ ! $(go version) ]]; do
+function install-go () {
+    if [[ ! $(go version) ]]; then
       wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz
       sudo tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
-      if [[ -z $GOPATH ]]; then
-        {
-	  printf "export PATH=%s:/usr/local/go/bin\n" "$PATH"
-	  printf "export GOPATH=/usr/local/go\n"
-        } | sudo tee -a /etc/profile 
-        source /etc/profile
-      fi 
-    done
+      {
+        printf "export PATH=%s:/usr/local/go/bin\n" "$PATH"
+        printf "export GOPATH=/home/%s/go/bin\n" "$USER"
+        printf "export PATH=%s:%s\n" "$PATH" "$GOPATH"
+      } | sudo tee -a ~/.bashrc
+    fi
+}
+
+function install-shfmt () {
+  if [[ ! $(shfmt --version) ]]; then  
     sudo go get mvdan.cc/sh/v3/cmd/shfmt  
-  done 
+  fi 
 }
 
 function clean-dotfiles () {
@@ -87,7 +87,7 @@ function create-symlinks () {
   ln -sv $dir/.vimrc ~
   ln -sv $dir/.xinitrc ~
   ln -sv $dir/.gitconfig ~
-  cp ./bg1.png ~/bg1.png
+  cp $dir/bg1.png ~/bg1.png
 }
 
 function start-gui () {
@@ -98,7 +98,8 @@ function start-gui () {
 function main () {
     install-packages
     install-shellcheck
-    #install-shfmt #something wrong with this
+    install-go 
+    install-shfmt
     clean-dotfiles
     create-symlinks
     start-gui
