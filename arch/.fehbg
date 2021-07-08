@@ -1,2 +1,2 @@
-#!/bin/bash
-feh --no-fehbg --bg-fill "$HOME"/bg1.png
+#!/bin/sh
+feh --no-fehbg --bg-fill '/home/bck/bg1.png' 

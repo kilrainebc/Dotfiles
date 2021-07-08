@@ -119,8 +119,8 @@ function start-gui () {
 function main () {
     install-packages
     install-shellcheck
-    install-go 
-    install-shfmt
+    #install-go 
+    #install-shfmt
     clean-dotfiles
     create-symlinks
     start-gui
