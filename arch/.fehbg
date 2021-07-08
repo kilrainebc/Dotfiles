@@ -1,7 +1,2 @@
 #!/bin/bash
-# 
-# ~/.fehbg
-#
-# Author: kilrainebc
-# Description: ./fehbg script
 feh --no-fehbg --bg-fill "$HOME"/bg1.png

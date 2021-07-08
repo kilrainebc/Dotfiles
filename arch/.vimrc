@@ -1,3 +1,4 @@
+set directory=/tmp
 set number relativenumber
 set textwidth=80
 set hlsearch incsearch 
