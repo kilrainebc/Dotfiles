@@ -6,19 +6,40 @@
 # Description: small util for setting up dotfiles
 
 function main () {
+  case "$1" in
+    --help|-h)
+      printf "Usage: ./ %s <subcommand>\n" $(basename $0)
+      printf "Subcommands:
+        install
+	reload
+	\n"
+      printf "Supported Operating Systems:
+        arch
+        debian
+      \n"
+      exit 64
+    ;;
+    install|reload)
+      subcmd="$1" 
+    ;;
+    *)
+      printf "dotcfg: ERROR - Please run ./%s --help\n" $(basename $0)
+      exit 64 
+    ;;  
+  esac
+
   distro=$( ( lsb_release -ds || cat /etc/*release || uname -om ) 2>/dev/null | head -n1 )
   if [[ $distro == 'NAME="Arch Linux"' ]]; then
     distro='arch'
   # elif [[ $distro == <debians output> ]]; then
   else
-    echo "distro not right " 
+    printf "dotcfg: WARN - Automatic Distrobution detection failed!\n"
     while [[ ! -f ./lib/"$distro".bash ]]; do
-      read -p "Please supply a distro: " distro
+      read -p "dotcfg: Please supply a distro: " distro
     done
   fi
   source ./lib/$distro.bash
-  echo "distro: $distro" 
-  install
+  $subcmd 
 }
 
-main
+main $1

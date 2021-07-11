@@ -1,5 +1,5 @@
 function install () {
-  #install_software
+  install_software
   install_configs
   load_gui  
 }
@@ -74,8 +74,7 @@ function install_manually () {
 }
 
 function install_shellcheck () {
-  if [[ ! $(shellcheck --version) ]]; then
-    local scversion
+  if [[ ! $(shellcheck --version) ]]; then local scversion
     scversion="latest" # or "v0.4.7", or "stable", or "latest"
     wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
     sudo cp "shellcheck-${scversion}/shellcheck" /usr/bin/
@@ -102,13 +101,14 @@ function remove_configs () {
 }
 
 function create_symlinks () {
-  #git pull
+  # refresh ./configs 
   dir="$(pwd)/configs"
   ln -sv $dir/.Xresources ~
   ln -sv $dir/.bash_profile ~
   ln -sv $dir/.aliasrc ~
   ln -sv $dir/.bashrc ~
-  ln -sv $dir/.config ~
+  #ln -sv $dir/.config ~ # TODO - figure out how to get this to work
+  cp -r $dir/.config ~/.config/ 
   ln -sv $dir/.fehbg ~
   ln -sv $dir/.vimrc ~
   ln -sv $dir/.xinitrc ~
@@ -119,4 +119,9 @@ function create_symlinks () {
 function load_gui () {
   wal -i ~/bg1.png
   startx    
+}
+
+function reload () {
+  install_configs
+  wal -i ~/bg1.png
 }
