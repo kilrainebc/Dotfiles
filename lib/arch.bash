@@ -103,7 +103,7 @@ function remove_configs () {
 
 function create_symlinks () {
   #git pull
-  dir="$(pwd)/.config"
+  dir="$(pwd)/configs"
   ln -sv $dir/.Xresources ~
   ln -sv $dir/.bash_profile ~
   ln -sv $dir/.aliasrc ~
