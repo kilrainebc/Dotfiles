@@ -1,5 +1,5 @@
 function install () {
-  install_software
+  #install_software
   install_configs
   load_gui  
 }
@@ -14,10 +14,9 @@ function install_software () {
 function install_via_pacman () {
   local packages
 
-  sudo pacman-key --refresh-keys
-  #sudo rm /etc/pacman.d/gnupg -r
-  #sudo pacman-key --init
-  #sudo pacman-key --populate archlinux
+  sudo rm /etc/pacman.d/gnupg -r
+  sudo pacman-key --init
+  sudo pacman-key --populate archlinux
 
   # Shell
   packages+=' zsh'
@@ -48,7 +47,7 @@ function install_via_pip () {
   local packages
 
   # PyWal
-  pypack+=' pywal'
+  packages+=' pywal'
 
   # Install Packages
   yes | sudo pip3 install $packages
@@ -60,11 +59,14 @@ function install_via_goget () {
   # shfmt
   packages+=' mvdan.cc/sh/v3/cmd/shfmt' 
   
-  for each package in packages; do
+  for package in $packages; do
     go get $package
   done
-
-  sudo mv -f "$GOPATH"/bin/* /usr/bin
+  
+  if [[ -z $GOPATH ]]; then
+    GOPATH=$(go env GOPATH) 
+  fi  
+  sudo mv "$GOPATH"/bin/* /usr/bin
 }
 
 function install_manually () {
@@ -100,20 +102,18 @@ function remove_configs () {
 }
 
 function create_symlinks () {
-  git pull
-  dir="$(pwd)/cfgs"
+  #git pull
+  dir="$(pwd)/.config"
   ln -sv $dir/.Xresources ~
   ln -sv $dir/.bash_profile ~
   ln -sv $dir/.aliasrc ~
   ln -sv $dir/.bashrc ~
-  #cp -rv $dir/.config ~/.config
   ln -sv $dir/.config ~
   ln -sv $dir/.fehbg ~
   ln -sv $dir/.vimrc ~
   ln -sv $dir/.xinitrc ~
   ln -sv $dir/.gitconfig ~
-  #cp $dir/bg1.png ~/bg1.png
-  ln -sv $dir/.bg1.png ~
+  ln -sv $dir/bg1.png ~
 }
 
 function load_gui () {
