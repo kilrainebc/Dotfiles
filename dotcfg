@@ -7,11 +7,12 @@
 
 function main () {
   case "$1" in
-    --help|-h)
+    --help|-h|help)
       printf "Usage: ./ %s <subcommand>\n" $(basename $0)
       printf "Subcommands:
-        install
-	reload
+        install\tinitial install
+	reload\tupdates dotfiles
+	resize\tresize resolution
 	\n"
       printf "Supported Operating Systems:
         arch
@@ -21,6 +22,24 @@ function main () {
     ;;
     install|reload)
       subcmd="$1" 
+    ;;
+    resize)
+      case $2 in
+        --help|-h|*help*) 
+	  printf "Usage: ./%s resize <device> <mode>\n" $(basename $0)
+	  printf "Device:
+	  Desktop
+	  Laptop
+	  \n"
+	  printf "Mode:
+	  Fullscreen
+	  Windowed
+	  \n"
+	;;
+	*)
+        subcmd="resize_resolution ${@:2:3}"
+	;;
+      esac      
     ;;
     *)
       printf "dotcfg: ERROR - Please run ./%s --help\n" $(basename $0)
@@ -38,8 +57,9 @@ function main () {
       read -p "dotcfg: Please supply a distro: " distro
     done
   fi
+
   source ./lib/$distro.bash
   $subcmd 
 }
 
-main $1
+main $@

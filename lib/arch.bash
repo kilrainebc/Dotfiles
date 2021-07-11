@@ -117,6 +117,7 @@ function create_symlinks () {
 }
 
 function load_gui () {
+  resize_resolution 
   wal -i ~/bg1.png
   startx    
 }
@@ -124,4 +125,48 @@ function load_gui () {
 function reload () {
   install_configs
   wal -i ~/bg1.png
+}
+
+function resize_resolution () {
+  local resolution
+
+  resolution=$(xrandr | grep "*" | awk '{print $1}')
+  printf "dotcfg: Current resolution: %s\n" $resolution
+
+  case "$1" in
+    laptop)
+      case "$2" in
+        fullscreen)
+          resolution="1360x768"	
+	;;
+	windowed)
+          resolution="800x600"	
+	;;
+	*)
+	read -p "dotcfg: please specify a resolution: " resolution
+	;;
+      esac 
+    ;; 
+    desktop)
+      case "$2" in
+        fullscreen)
+	  resolution="1920x1080"
+	;;
+	windowed)
+	  resolution="1440x900"
+	;; 
+	*)
+	  read -p "dotcfg: please specify a resolution: " resolution
+	;;
+      esac
+    ;; 
+    *) 
+      read -p "dotcfg: please specify a resolution: " resolution
+    ;;
+  esac
+  
+  xrandr -s $resolution 
+  
+  resolution=$(xrandr | grep "*" | awk '{print $1}')
+  printf "dotcfg: New resolution: %s\n" $resolution
 }
