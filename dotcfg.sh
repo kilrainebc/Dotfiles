@@ -5,17 +5,18 @@
 # Author: kilrainebc
 # Description: small util for setting up dotfiles
 
-# TODO: make a way to auto-detect distro.  
+function main () {
+  distro=$( (lsb_release -ds || cat /etc/*release || uname -om ) 2>/dev/null | head -n1)
+  if [[ $distro == 'NAME="Arch Linux"' ]]; then
+    $distro='arch'
+  # elif [[ $distro == <debians output> ]]; then
+  else
+    while [[ ! -f ./lib/"$distro".bash ]]; do
+      read -p "Please supply a distro" "$distro"
+    done
+  fi
+  source ./lib/$distro.bash
+  install
+}
 
-if [[ -z $1 ]]; then
-  printf "usage: %s <DISTRO>\n " $(basename $0)
-  exit 64
-fi
-
-if [[ ! -d ./"$1" ]]; then
-  printf "distro provided (%s) does not have a configuration directory.\n" "$1"
-  exit 64
-fi
-
-source ./"$1"/install.bash
 main
