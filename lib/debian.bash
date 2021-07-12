@@ -44,6 +44,7 @@ function install_via_apt () {
 function install_manually () {
   install_shellcheck
   install_go
+  install_overpass
 }
 
 function install_shellcheck () {
@@ -65,6 +66,15 @@ function install_go () {
       sudo ln -sv /usr/local/go/bin/go /usr/bin/go 
       rm -rf "${goversion}"
     fi
+}
+
+function install_overpass () {
+  local uri
+  uri='https://github.com/RedHatOfficial/Overpass/blob/master/desktop-fonts/overpass-mono/overpass-mono-regular.otf?raw=true'
+  wget -O overpass-mono-regular.otf "${uri}"
+  sudo mkdir -p /usr/share/fonts/OpenType
+  sudo mv overpass* /usr/share/fonts/OpenType/
+  sudo fc-cache -f 
 }
 
 function install_via_pip () {
