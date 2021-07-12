@@ -35,6 +35,7 @@ function main () {
 	  Fullscreen
 	  Windowed
 	  \n"
+    exit 64
 	;;
 	*)
         subcmd="resize_resolution ${@:2:3}"
