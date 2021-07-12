@@ -32,7 +32,7 @@ function install_via_apt () {
   packages+=' dmenu ranger feh w3m imagemagick neofetch' 
   
   # Coding | Vim, python, pip
-  packages+=' vim python python-pip'
+  packages+=' vim python3 python3-pip'
 
   # Admin-Tools | SSH, Firefox 
   packages+=' firefox-esr wget'  
